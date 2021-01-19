@@ -1,4 +1,4 @@
-iMail_VERSION = "1.3"
+iMail_VERSION = "1.4"
 function serializeToFile(mail, subject)
     local file = fs.open(subject,"w")
     file.write(textutils.serialize(mail))
@@ -31,6 +31,9 @@ function sortMail(mailin)
     local mail = textutils.unserialize(mailin)
     local user = mail[2]
     local filename = mail[3]
+    if (fs.exists("Users/"..user) ~= true) then
+        fs.makeDir("Users/"..user)
+    end
     local currentInbox = fs.list("Users/"..user)
     if (fs.exists("Users/"..user.."/"..filename)) then
         local duplicatecode = 1
@@ -99,7 +102,7 @@ end
 function newScreen()
     term.clear()
     term.setCursorPos(1, 1)
-    print("IMail Client V"..iMail_VERSION)
+    print("IMail Client V"..iMail_VERSION.." (API : "..iMail_VERSION..")")
 end
 function emptyInbox(user)
     local mails = fs.list("Users/"..user)
@@ -222,5 +225,7 @@ end
 function createUser(username)
     settings.set(username, "")
     settings.save(".settings")
-    fs.makeDir("Users/"..username)
+    if (fs.exists("Users/"..username) ~= true) then
+        fs.makeDir("Users/"..username)
+    end
 end

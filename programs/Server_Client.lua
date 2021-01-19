@@ -2,7 +2,7 @@ Server_Client_VERSION = "1.0"
 function newScreen()
     term.clear()
     term.setCursorPos(1, 1)
-    print("IMail Server Utility V"..Server_Client_VERSION)
+    print("IMail Server Utility V"..Server_Client_VERSION.." (API : "..iMail.iMail_VERSION..")")
 end
 while (true) do
     newScreen()
